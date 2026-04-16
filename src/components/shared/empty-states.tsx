@@ -55,9 +55,9 @@ export function NoArticlesFound() {
   return (
     <EmptyState
       icon={FileText}
-      title="No articles found"
-      description="We couldn't find any articles matching your criteria. Try adjusting your filters or search terms."
-      action={{ label: 'Browse All Articles', href: '/articles' }}
+      title="No business guides found"
+      description="We couldn't find matching business guides. Try adjusting filters or search terms."
+      action={{ label: 'Browse Business Listings', href: '/listings' }}
     />
   )
 }
@@ -110,8 +110,8 @@ export function NoSavedItems() {
     <EmptyState
       icon={Bookmark}
       title="No saved items"
-      description="Items you bookmark will appear here. Start exploring and save content you want to revisit."
-      action={{ label: 'Explore Content', href: '/' }}
+      description="Saved business listings will appear here. Start exploring and save businesses you want to revisit."
+      action={{ label: 'Explore Listings', href: '/listings' }}
     />
   )
 }

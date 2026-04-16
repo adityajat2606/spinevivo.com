@@ -1,4 +1,5 @@
 import { siteIdentity } from '@/config/site.identity'
+import { SITE_RECIPE } from '@/config/site.recipe'
 import { siteTaskDefinitions, siteTaskViews } from '@/config/site.tasks'
 
 export type TaskKey =
@@ -69,3 +70,9 @@ export const SITE_CONFIG: SiteConfig = {
 
 export const getTaskConfig = (key: TaskKey) =>
   SITE_CONFIG.tasks.find((task) => task.key === key) || null
+
+/** Tasks shown in navigation, homepage lanes, and auth shortcuts — intersects base flags with `SITE_RECIPE.enabledTasks`. */
+export function getRecipeEnabledTasks(): TaskConfig[] {
+  const allowed = new Set<TaskKey>(SITE_RECIPE.enabledTasks)
+  return SITE_CONFIG.tasks.filter((task) => task.enabled && allowed.has(task.key))
+}

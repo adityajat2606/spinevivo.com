@@ -7,17 +7,17 @@ import { useToast } from '@/components/ui/use-toast'
 import { FileText, Plus, Tag, Bookmark, Settings, Search } from 'lucide-react'
 
 const quickLinks = [
-  { label: 'Go to Social Bookmarks', href: '/sbm', icon: Bookmark },
-  { label: 'Go to Articles', href: '/articles', icon: FileText },
+  { label: 'Go to Saved Listings', href: '/sbm', icon: Bookmark },
+  { label: 'Go to Business Guides', href: '/articles', icon: FileText },
   { label: 'Go to Listings', href: '/listings', icon: Tag },
   { label: 'Go to Settings', href: '/settings', icon: Settings },
 ]
 
 const createActions = [
-  { label: 'Create Article', href: '/create/article', icon: Plus },
+  { label: 'Create Business Guide', href: '/create/article', icon: Plus },
   { label: 'Create Listing', href: '/create/listing', icon: Plus },
-  { label: 'Create Classified', href: '/create/classified', icon: Plus },
-  { label: 'Submit Bookmark', href: '/create/sbm', icon: Plus },
+  { label: 'Create Local Offer', href: '/create/classified', icon: Plus },
+  { label: 'Save Business Link', href: '/create/sbm', icon: Plus },
 ]
 
 export function CommandPalette() {
