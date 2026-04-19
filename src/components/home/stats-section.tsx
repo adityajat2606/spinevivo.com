@@ -7,8 +7,8 @@ const stats = [
   {
     icon: FileText,
     value: '25K+',
-    label: 'Articles Published',
-    description: 'Quality content created by our community'
+    label: 'Business Profiles Updated',
+    description: 'Listing updates published by owners'
   },
   {
     icon: Building2,
@@ -39,7 +39,7 @@ export function StatsSection() {
             Platform in Numbers
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Join our thriving community of creators and businesses
+            Join a trusted network of local businesses and customers
           </p>
         </div>
 
