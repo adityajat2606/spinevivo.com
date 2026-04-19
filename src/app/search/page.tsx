@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { fetchSiteFeed } from "@/lib/site-connector";
 import { buildPostUrl, getPostTaskKey } from "@/lib/task-data";
 import { getMockPostsForTask } from "@/lib/mock-posts";
-import { SITE_CONFIG } from "@/lib/site-config";
+import { SITE_CONFIG, type TaskKey } from "@/lib/site-config";
 import { TaskPostCard } from "@/components/shared/task-post-card";
 
 export const revalidate = 3;
@@ -76,7 +76,7 @@ export default async function SearchPage({
       description={
         query
           ? `Results for "${query}"`
-          : "Browse the latest posts across every task."
+          : "Search verified business listings and local services in one place."
       }
       actions={
         <form action="/search" className="flex w-full gap-2 sm:w-auto">
@@ -88,11 +88,11 @@ export default async function SearchPage({
             <Input
               name="q"
               defaultValue={query}
-              placeholder="Search across tasks..."
+              placeholder="Business name, category, or neighborhood…"
               className="h-11 pl-9"
             />
           </div>
-          <Button type="submit" className="h-11">
+          <Button type="submit" className="h-11 rounded-full bg-black px-6 text-white hover:bg-[#1a1a1a]">
             Search
           </Button>
         </form>
@@ -103,12 +103,19 @@ export default async function SearchPage({
           {results.map((post) => {
             const task = getPostTaskKey(post);
             const href = task ? buildPostUrl(task, post.slug) : `/posts/${post.slug}`;
-            return <TaskPostCard key={post.id} post={post} href={href} />;
+            return (
+              <TaskPostCard
+                key={post.id}
+                post={post}
+                href={href}
+                taskKey={(task || "listing") as TaskKey}
+              />
+            );
           })}
         </div>
       ) : (
-        <div className="rounded-2xl border border-dashed border-border p-10 text-center text-muted-foreground">
-          No matching posts yet.
+        <div className="rounded-[2rem] border border-dashed border-black/10 bg-[#f8fafc] px-8 py-16 text-center text-[#525252]">
+          No matching listings yet. Try a shorter phrase or browse the directory.
         </div>
       )}
     </PageShell>

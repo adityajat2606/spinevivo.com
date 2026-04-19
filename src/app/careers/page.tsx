@@ -1,68 +1,117 @@
-import Link from "next/link";
-import { PageShell } from "@/components/shared/page-shell";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { SITE_CONFIG } from "@/lib/site-config";
+import Link from 'next/link'
+import { ArrowRight, Briefcase, Laptop, MapPin } from 'lucide-react'
+import { PageShell } from '@/components/shared/page-shell'
+import { DirPanel, DirEyebrow, dirSurface } from '@/components/shared/directory-site-marketing'
+import { SITE_CONFIG } from '@/lib/site-config'
 
 const roles = [
-  { title: "Product Designer", location: "Remote", type: "Full-time", level: "Mid" },
-  { title: "Frontend Engineer", location: "New York, NY", type: "Full-time", level: "Senior" },
-  { title: "Community Lead", location: "Remote", type: "Part-time", level: "Mid" },
-];
+  {
+    title: 'Senior Product Designer',
+    location: 'Remote (US)',
+    type: 'Full-time',
+    level: 'Senior',
+    focus: 'Design systems for dense information—search, filters, and owner dashboards.',
+  },
+  {
+    title: 'Full-stack Engineer',
+    location: 'Hybrid · NYC',
+    type: 'Full-time',
+    level: 'Mid',
+    focus: 'Next.js, edge caching, and accessibility for high-trust listing surfaces.',
+  },
+  {
+    title: 'Community Partnerships',
+    location: 'Remote',
+    type: 'Full-time',
+    level: 'Mid',
+    focus: 'Launch new metros with clinics, studios, and BIDs—measured, not spray-and-pray.',
+  },
+]
 
 const benefits = [
-  "Flexible schedules and remote-first culture",
-  "Health, dental, and vision coverage",
-  "Annual learning stipend",
-  "Quarterly offsites and team retreats",
-];
+  'Medical, dental, and vision—employer-sponsored at 90%',
+  'Four-day deep work blocks each month (meetings consolidated)',
+  '$2,500 annual learning budget + conference travel',
+  'Hardware stipend and ergonomic home-office allowance',
+  'Transparent leveling matrix published internally every quarter',
+]
+
+const process = [
+  { step: '01', title: 'Intro call', body: '30 minutes with hiring manager—goals, constraints, and mutual fit.' },
+  { step: '02', title: 'Work session', body: 'Paid async exercise or paired session—no trivia, no whiteboard mazes.' },
+  { step: '03', title: 'Team round', body: 'Meet cross-functional partners you would ship with weekly.' },
+  { step: '04', title: 'Offer', body: 'Comp bands shared up front; references only after verbal alignment.' },
+]
 
 export default function CareersPage() {
   return (
     <PageShell
       title="Careers"
-      description={`Help us build the future of community-driven publishing at ${SITE_CONFIG.name}.`}
+      description={`Help us build the most trusted directory for local businesses. ${SITE_CONFIG.name} is remote-first with intentional on-sites for launches.`}
       actions={
-        <Button asChild>
-          <Link href="/contact">Apply Now</Link>
-        </Button>
+        <Link href="/contact" className={dirSurface.cta}>
+          Start a conversation
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Link>
       }
     >
-      <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <div className="space-y-4">
+      <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="space-y-5">
           {roles.map((role) => (
-            <Card key={role.title} className="border-border bg-card">
-              <CardContent className="p-6">
-                <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="secondary">{role.level}</Badge>
-                  <Badge variant="outline">{role.type}</Badge>
-                </div>
-                <h2 className="mt-3 text-lg font-semibold text-foreground">{role.title}</h2>
-                <p className="mt-1 text-sm text-muted-foreground">{role.location}</p>
-                <Button variant="outline" className="mt-4" asChild>
-                  <Link href="/contact">View Role</Link>
-                </Button>
-              </CardContent>
-            </Card>
+            <DirPanel key={role.title}>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-full bg-black px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-white">{role.level}</span>
+                <span className="rounded-full border border-black/[0.08] px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#525252]">
+                  {role.type}
+                </span>
+              </div>
+              <h2 className={`mt-4 text-xl font-semibold ${dirSurface.title}`}>{role.title}</h2>
+              <p className={`mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm ${dirSurface.muted}`}>
+                <span className="inline-flex items-center gap-1">
+                  <MapPin className="h-4 w-4" aria-hidden />
+                  {role.location}
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  <Briefcase className="h-4 w-4" aria-hidden />
+                  Core product
+                </span>
+              </p>
+              <p className={`mt-3 text-sm leading-relaxed ${dirSurface.muted}`}>{role.focus}</p>
+              <Link href="/contact" className={`mt-5 inline-flex ${dirSurface.ctaOutline}`}>
+                Apply
+              </Link>
+            </DirPanel>
           ))}
         </div>
-        <Card className="border-border bg-card">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-foreground">Why {SITE_CONFIG.name}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">
-              We are building a product that helps people discover and share the best knowledge on the web.
-            </p>
-            <div className="mt-4 space-y-2 text-sm text-muted-foreground">
+        <div className="space-y-5">
+          <DirPanel variant="soft">
+            <DirEyebrow>Benefits</DirEyebrow>
+            <h3 className={`mt-3 text-lg font-semibold ${dirSurface.title}`}>Built for sustainable pace</h3>
+            <ul className="mt-4 space-y-3 text-sm leading-relaxed">
               {benefits.map((benefit) => (
-                <div key={benefit} className="rounded-md border border-border bg-secondary/40 px-3 py-2">
-                  {benefit}
+                <li key={benefit} className={`flex gap-3 ${dirSurface.muted}`}>
+                  <Laptop className="mt-0.5 h-4 w-4 shrink-0 text-[#38bdf8]" aria-hidden />
+                  <span>{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </DirPanel>
+          <DirPanel variant="inset">
+            <DirEyebrow>Hiring process</DirEyebrow>
+            <div className="mt-4 space-y-4">
+              {process.map((p) => (
+                <div key={p.step} className="flex gap-4">
+                  <span className="font-mono text-xs font-semibold text-[#94a3b8]">{p.step}</span>
+                  <div>
+                    <p className={`text-sm font-semibold ${dirSurface.title}`}>{p.title}</p>
+                    <p className={`mt-1 text-sm ${dirSurface.muted}`}>{p.body}</p>
+                  </div>
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
+          </DirPanel>
+        </div>
       </div>
     </PageShell>
-  );
+  )
 }

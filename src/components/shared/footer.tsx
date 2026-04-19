@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { FileText, Building2, LayoutGrid, Tag, Github, Twitter, Linkedin, Image as ImageIcon, User, ArrowRight, Sparkles } from 'lucide-react'
-import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
+import { SITE_CONFIG, getRecipeEnabledTasks, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { FOOTER_OVERRIDE_ENABLED, FooterOverride } from '@/overrides/footer'
@@ -19,12 +19,9 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const footerLinks = {
-  platform: SITE_CONFIG.tasks.filter((task) => task.enabled).map((task) => ({
-    name: task.label,
-    href: task.route,
-    icon: taskIcons[task.key] || LayoutGrid,
-  })),
   company: [
+    { name: 'Company', href: '/company' },
+    { name: 'Business Listings', href: '/listings' },
     { name: 'About', href: '/about' },
     { name: 'Team', href: '/team' },
     { name: 'Careers', href: '/careers' },
@@ -57,20 +54,29 @@ export function Footer() {
   }
 
   const { recipe } = getFactoryState()
-  const enabledTasks = SITE_CONFIG.tasks.filter((task) => task.enabled)
+  const enabledTasks = getRecipeEnabledTasks()
   const primaryTask = enabledTasks.find((task) => task.key === recipe.primaryTask) || enabledTasks[0]
+  const platformLinks = enabledTasks.map((task) => ({
+    name: task.label,
+    href: task.route,
+    icon: taskIcons[task.key] || LayoutGrid,
+  }))
 
   if (recipe.footer === 'minimal-footer') {
     return (
-      <footer className="border-t border-[#d7deca] bg-[#f4f6ef] text-[#1f2617]">
+      <footer className="border-t border-black/[0.06] bg-[#f8fafc] text-[#0a0a0a]">
         <div className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-8 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div>
             <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
-            <p className="mt-1 text-sm text-[#56604b]">{SITE_CONFIG.description}</p>
+            <p className="mt-1 text-sm text-[#525252]">{SITE_CONFIG.description}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             {enabledTasks.slice(0, 5).map((task) => (
-              <Link key={task.key} href={task.route} className="rounded-lg border border-[#d7deca] bg-white px-3 py-2 text-sm font-medium text-[#1f2617] hover:bg-[#ebefdf]">
+              <Link
+                key={task.key}
+                href={task.route}
+                className="rounded-full border border-black/[0.08] bg-white px-4 py-2 text-sm font-medium text-[#0a0a0a] shadow-sm hover:bg-[#f3f8ff]"
+              >
                 {task.label}
               </Link>
             ))}
@@ -88,7 +94,7 @@ export function Footer() {
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-7">
               <div className="flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/12 bg-white/8 p-1.5">
-                  <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
+                  <img src="/favicon.png?v=20260416" alt={`${SITE_CONFIG.name} logo`} width="48" height="48" className="h-full w-full object-contain" />
                 </div>
                 <div>
                   <p className="text-lg font-semibold">{SITE_CONFIG.name}</p>
@@ -107,7 +113,7 @@ export function Footer() {
               <div>
                 <h3 className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">Surfaces</h3>
                 <ul className="mt-4 space-y-3 text-sm text-slate-200">
-                  {footerLinks.platform.map((item: any) => (
+                  {platformLinks.map((item: any) => (
                     <li key={item.name}><Link href={item.href} className="flex items-center gap-2 hover:text-white">{item.icon ? <item.icon className="h-4 w-4" /> : null}{item.name}</Link></li>
                   ))}
                 </ul>
@@ -154,7 +160,7 @@ export function Footer() {
             <div>
               <h4 className="text-xs font-semibold uppercase tracking-[0.24em] text-[#8b6d5a]">Sections</h4>
               <ul className="mt-4 space-y-3 text-sm">
-                {footerLinks.platform.map((item: any) => (
+                {platformLinks.map((item: any) => (
                   <li key={item.name}><Link href={item.href} className="hover:text-[#2f1d16]">{item.name}</Link></li>
                 ))}
               </ul>
@@ -174,33 +180,84 @@ export function Footer() {
   }
 
   return (
-    <footer className="border-t border-slate-200 bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_100%)] text-slate-950">
+    <footer className="border-t border-black/[0.06] bg-white text-[#0a0a0a]">
+      <div className="bg-[linear-gradient(135deg,#e8f4ff_0%,#f5f9ff_45%,#ffffff_100%)]">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="flex flex-col items-start justify-between gap-6 rounded-[2rem] border border-black/[0.06] bg-white/80 px-6 py-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)] backdrop-blur-sm md:flex-row md:items-center">
+            <div>
+              <p className="font-[family-name:var(--font-display)] text-2xl font-medium italic tracking-tight text-[#0a0a0a] md:text-3xl">
+                Stay in the loop
+              </p>
+              <p className="mt-2 max-w-md text-sm text-[#525252]">New verified businesses and neighborhood guides, delivered without clutter.</p>
+            </div>
+            <div className="flex w-full max-w-lg flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+              <p className="flex-1 text-sm leading-relaxed text-[#525252]">
+                Claim your profile, add photos and hours, and show up when neighbors search for what you offer.
+              </p>
+              <Link
+                href="/register"
+                className="inline-flex h-12 shrink-0 items-center justify-center rounded-full bg-black px-6 text-sm font-semibold text-white transition hover:bg-[#1a1a1a]"
+              >
+                List your business
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr_0.8fr]">
+        <div className="grid gap-10 md:grid-cols-[1.15fr_0.85fr_0.85fr_0.85fr_0.85fr]">
           <div>
             <Link href="/" className="flex items-center gap-3">
-              <div className="h-11 w-11 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
-                <img src="/favicon.png?v=20260401" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
+              <div className="h-11 w-11 overflow-hidden rounded-2xl border border-black/[0.06] bg-white p-1 shadow-sm">
+                <img src="/favicon.png?v=20260416" alt={`${SITE_CONFIG.name} logo`} width="44" height="44" className="h-full w-full object-contain" />
               </div>
               <div>
-                <span className="block text-lg font-semibold">{SITE_CONFIG.name}</span>
-                <span className="text-xs uppercase tracking-[0.22em] text-slate-500">{siteContent.footer.tagline}</span>
+                <span className="block text-lg font-semibold tracking-tight">{SITE_CONFIG.name}</span>
+                <span className="text-xs uppercase tracking-[0.22em] text-[#737373]">{siteContent.footer.tagline}</span>
               </div>
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-slate-600">{SITE_CONFIG.description}</p>
+            <p className="mt-5 max-w-sm text-sm leading-7 text-[#525252]">{SITE_CONFIG.description}</p>
+            {primaryTask ? (
+              <Link
+                href={primaryTask.route}
+                className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-5 py-2.5 text-sm font-semibold text-white hover:bg-[#1a1a1a]"
+              >
+                Browse directory
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            ) : null}
           </div>
-          {(['platform', 'company', 'resources', 'legal'] as const).map((section) => (
+          <div>
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#737373]">Directory</h3>
+            <ul className="mt-5 space-y-3 text-sm text-[#404040]">
+              {platformLinks.map((item: any) => (
+                <li key={item.name}>
+                  <Link href={item.href} className="flex items-center gap-2 hover:text-black">
+                    {item.icon ? <item.icon className="h-4 w-4 opacity-70" /> : null}
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {(['company', 'resources', 'legal'] as const).map((section) => (
             <div key={section}>
-              <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">{section}</h3>
-              <ul className="mt-5 space-y-3 text-sm text-slate-600">
+              <h3 className="text-xs font-semibold capitalize tracking-[0.2em] text-[#737373]">{section}</h3>
+              <ul className="mt-5 space-y-3 text-sm text-[#404040]">
                 {footerLinks[section].map((item: any) => (
-                  <li key={item.name}><Link href={item.href} className="flex items-center gap-2 hover:text-slate-950">{item.icon ? <item.icon className="h-4 w-4" /> : null}{item.name}</Link></li>
+                  <li key={item.name}>
+                    <Link href={item.href} className="hover:text-black">
+                      {item.name}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-        <div className="mt-12 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">&copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.</div>
+        <div className="mt-12 border-t border-black/[0.06] pt-6 text-center text-sm text-[#737373]">
+          &copy; {new Date().getFullYear()} {SITE_CONFIG.name}. All rights reserved.
+        </div>
       </div>
     </footer>
   )

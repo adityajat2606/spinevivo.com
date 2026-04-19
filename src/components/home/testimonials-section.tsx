@@ -15,7 +15,7 @@ export function TestimonialsSection() {
             What Our Users Say
           </h2>
           <p className="mt-2 text-muted-foreground">
-            Trusted by thousands of creators and businesses
+            Trusted by local business owners and service seekers
           </p>
         </div>
 
