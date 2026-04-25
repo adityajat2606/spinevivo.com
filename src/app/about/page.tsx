@@ -1,21 +1,19 @@
 import Link from 'next/link'
 import { ArrowRight, Shield, Sparkles, Target } from 'lucide-react'
 import { PageShell } from '@/components/shared/page-shell'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { DirPanel, DirEyebrow, dirSurface } from '@/components/shared/directory-site-marketing'
-import { mockTeamMembers } from '@/data/mock-data'
 import { SITE_CONFIG } from '@/lib/site-config'
 
 const stats = [
   { value: '120+', label: 'Cities with curated categories' },
-  { value: '4.9★', label: 'Average owner satisfaction (quarterly)' },
+  { value: '4.9?', label: 'Average owner satisfaction (quarterly)' },
   { value: '24h', label: 'Typical response on trust & safety' },
 ]
 
 const values = [
   {
     title: 'Clarity over noise',
-    body: 'We strip away infinite-scroll tricks so visitors can compare providers and studios with steady context—not engagement bait.',
+    body: 'We strip away infinite-scroll tricks so visitors can compare providers and studios with steady context, not engagement bait.',
     icon: Sparkles,
   },
   {
@@ -34,7 +32,7 @@ export default function AboutPage() {
   return (
     <PageShell
       title={`About ${SITE_CONFIG.name}`}
-      description={`We are building a calm directory for local businesses where trust matters—clinics, movement studios, and the everyday services neighbors rely on.`}
+      description={`We are building a calm directory for local businesses where trust matters, clinics, movement studios, and the everyday services neighbors rely on.`}
       actions={
         <>
           <Link href="/listings" className={dirSurface.ctaOutline}>
@@ -51,7 +49,7 @@ export default function AboutPage() {
         <DirPanel>
           <DirEyebrow>Our story</DirEyebrow>
           <h2 className={`mt-3 text-2xl font-semibold tracking-tight sm:text-3xl ${dirSurface.title}`}>
-            Search should feel supportive—especially when health is on the line.
+            Search should feel supportive, especially when health is on the line.
           </h2>
           <p className={`mt-4 text-sm leading-relaxed sm:text-base ${dirSurface.muted}`}>
             {SITE_CONFIG.name} started as a reaction to cluttered maps and pay-to-win placement. We wanted a single surface where owners could tell
@@ -82,37 +80,6 @@ export default function AboutPage() {
                   <p className={`mt-2 text-sm leading-relaxed ${dirSurface.muted}`}>{body}</p>
                 </div>
               </div>
-            </DirPanel>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-12">
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <DirEyebrow>People</DirEyebrow>
-            <h2 className={`mt-2 text-2xl font-semibold ${dirSurface.title}`}>Faces behind the directory</h2>
-            <p className={`mt-2 max-w-xl text-sm ${dirSurface.muted}`}>A cross-functional crew—product, partnerships, and care—shipping weekly improvements.</p>
-          </div>
-          <Link href="/team" className={`inline-flex items-center text-sm font-semibold text-[#0a0a0a] hover:underline`}>
-            Full team page
-            <ArrowRight className="ml-2 h-4 w-4" aria-hidden />
-          </Link>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {mockTeamMembers.map((member) => (
-            <DirPanel key={member.id} variant="inset">
-              <div className="flex items-center gap-3">
-                <Avatar className="h-12 w-12 border border-black/[0.06]">
-                  <AvatarImage src={member.avatar} alt={member.name} />
-                  <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
-                </Avatar>
-                <div>
-                  <p className={`text-sm font-semibold ${dirSurface.title}`}>{member.name}</p>
-                  <p className={`text-xs ${dirSurface.muted}`}>{member.role}</p>
-                </div>
-              </div>
-              <p className={`mt-4 text-sm leading-relaxed ${dirSurface.muted}`}>{member.bio}</p>
             </DirPanel>
           ))}
         </div>
