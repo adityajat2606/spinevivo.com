@@ -229,11 +229,10 @@ export async function TaskDetailPage({ task, slug }: { task: TaskKey; slug: stri
           taskLabel={taskConfig?.label || task}
           taskRoute={taskConfig?.route || "/"}
           post={post}
-          description={description}
+          descriptionHtml={descriptionHtml}
           category={category}
           images={images}
           mapEmbedUrl={mapEmbedUrl}
-          related={related}
         />
         <Footer />
       </div>

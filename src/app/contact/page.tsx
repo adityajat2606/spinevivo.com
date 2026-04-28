@@ -35,6 +35,9 @@ export default function ContactPage() {
     return <ContactPageOverride />
   }
 
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || 'support@example.com'
+  const contactEmailHref = `mailto:${contactEmail}`
+
   return (
     <div className={`min-h-screen ${tone.shell}`}>
       <NavbarShell />
@@ -59,7 +62,17 @@ export default function ContactPage() {
           </div>
 
           <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
-            <h2 className="text-2xl font-semibold">Send a message</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-2xl font-semibold">Send a message</h2>
+              <a
+                href={contactEmailHref}
+                className={`inline-flex h-11 items-center justify-center rounded-full px-5 text-sm font-semibold ${tone.action}`}
+              >
+                <Mail className="mr-2 h-4 w-4" />
+                Email us
+              </a>
+            </div>
+            <p className={`mt-3 text-sm ${tone.muted}`}>{contactEmail}</p>
             <form className="mt-6 grid gap-4">
               <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Your name" />
               <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
